@@ -1,5 +1,4 @@
 #include <unistd.h>
-#include <stdarg.h>
 
 /**
  * _putchar - writes the character c to stdout
@@ -29,11 +28,38 @@ int _puts(char *str)
 }
 
 /**
- * convert - converter a data set to the right format
- * @base: the base to convert the number to.
+ * print_number - prints an int to stdout
+ * @num: the digit to ouput.
  *
- * Return: a string of the formatted data.
+ * Return: nothing
  */
+void print_number(unsigned int num, int base, int sign, int caps)
+{
+	int pos;
+	const char digits_hexa[] = "0123456789abcdef";
+	
+	if (!sign)
+		num = (unsigned int)num;	
+	else
+	{
+		if (num < 0)
+		{
+			_putchar('-');
+			num = -num;
+		}
+	}
+	if (num / base != 0)
+		print_number((num / base), base, sign, caps);
+	pos = num % base;
+	if (caps && pos >= 11)
+	{
+		_putchar((unsigned)digits_hexa[pos++] - 32);
+	}
+	else
+	{
+		_putchar((unsigned)digits_hexa[pos++]);
+	}
+}
 char *convert(unsigned int num, int base)
 {
 	static char rep[] = "0123456789abcdef";
