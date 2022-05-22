@@ -5,7 +5,7 @@
  * Description: print character
  * Return: 1
  */
-int print_character(va_list arg)
+/*int print_character(va_list arg)
 {
 	int i;
 
@@ -13,7 +13,7 @@ int print_character(va_list arg)
 	_putchar(i);
 
 	return (1);
-}
+}*/
 /**
  * print_sign - print sign
  * @arg: va_list parameter
@@ -21,7 +21,7 @@ int print_character(va_list arg)
  * Description: print numbers and signed
  * Return: num of characters
  */
-int print_sign(va_list arg, int base)
+/*int print_sign(va_list arg, int base)
 {
 	int i = 0, cont = 0;
 	char *s;
@@ -37,7 +37,7 @@ int print_sign(va_list arg, int base)
 	_puts(s);
 	cont += _strlen(s);
 	return (cont);
-}
+}*/
 /**
  * print_unsign - print_unsign
  * @arg: va_list parameter
@@ -45,7 +45,7 @@ int print_sign(va_list arg, int base)
  * Description: print numbers without signed
  * Return: num of characters
  */
-int print_unsign(va_list arg, int base)
+/*int print_unsign(va_list arg, int base)
 {
 	int cont = 0;
 	unsigned int i;
@@ -58,14 +58,14 @@ int print_unsign(va_list arg, int base)
 
 	return (cont);
 
-}
+}*/
 /**
  * print_string - print string
  * @arg: va_list parameter
  * Description: print string
  * Return: num of characters
  */
-int print_string(va_list arg)
+/*int print_string(va_list arg)
 {
 	char *s;
 	int cont = 0;
@@ -81,7 +81,7 @@ int print_string(va_list arg)
 	_puts(s);
 	cont = _strlen(s);
 	return (cont);
-}
+}*/
 /**
  * print_base16_upper_lower - print_base16_upper_lower
  * @arg: va_list parameter
@@ -90,7 +90,7 @@ int print_string(va_list arg)
  * in representation parameter for print hexadecimal format
  * Return: num of characters
  */
-int print_base16_upper_lower(va_list arg, char *representation)
+/*int print_base16_upper_lower(va_list arg, char *representation)
 {
 	unsigned int i = 0, cont = 0;
 	char *s;
@@ -101,5 +101,5 @@ int print_base16_upper_lower(va_list arg, char *representation)
 	cont = _strlen(s);
 	return (cont);
 
-}
+}*/
 
