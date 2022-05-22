@@ -1,97 +1,111 @@
-#include <stdarg.h>
 #include "main.h"
-
-#define NORMAL_STATE 0
-#define SPECIFIER_STATE 1
-#define false 0
-#define true 1
-
 /**
- * _printf - formats strings like printf
- * @format: the input string
- *
- * Return: 0 on sucess.
+ *_printf - printf
+ *@format: const char pointer
+ *Description: this functions implement some functions of printf
+ *Return: num of characteres printed
  */
 int _printf(const char *format, ...)
 {
-	va_list ap;
-	int state = NORMAL_STATE;
-	int i;
-	char *str;
-	int n;
+	const char *string;
+	int cont = 0;
+	va_list arg;
 
-	
-	va_start(ap, format);
-	while (*format)
+	if (!format)
+		return (-1);
+
+	va_start(arg, format);
+	string = format;
+
+	cont = loop_format(arg, string);
+
+	va_end(arg);
+	return (cont);
+}
+/**
+ *loop_format - loop format
+ *@arg: va_list arg
+ *@string: pointer from format
+ *Description: This function make loop tp string pointer
+ *Return: num of characteres printed
+ */
+int loop_format(va_list arg, const char *string)
+{
+	int i = 0, flag = 0, cont_fm = 0, cont = 0, check_per = 0;
+
+	while (i < _strlen((char *)string) && *string != '\0')
 	{
-		switch(state)
-		{
-			case NORMAL_STATE:
-				switch(*format)
-				{
-					case '%':
-						state = SPECIFIER_STATE;
-						break;
-					default:
-						_putchar(*format);
-						break;
-				}
-				break;
-			case SPECIFIER_STATE:
-				switch(*format)
-				{
-					case 'c':
-						_putchar(va_arg(ap, int));
-						break;
-					case 's':
-						_puts(va_arg(ap, char *));
-						break;
-					case '%':
-						_putchar('%');
-						break;
-					case 'i':
-					case 'd':
-						i = va_arg(ap, int);
-						if (i < 0)
-						{
-							i = -i;
-							_putchar('-');
-						}
-						_puts(convert(i, 10));
-						break;
-					case 'b':
-						i = va_arg(ap, unsigned int);
-						_puts(convert(i, 2));
-						break;
-					case 'u':
-						i = va_arg(ap, unsigned int);
-						_puts(convert(i, 10));
-						break;
-					case 'x':
-						i = va_arg(ap, unsigned int);
-						_puts(convert(i, 16));
-						break;
-					case 'X':
-						i = va_arg(ap, unsigned int);
+		char aux = string[i];
 
-						str = convert(i, 16);
-						for (n = 0; str[n]; n++)
-						{
-							if (str[n] >= 97 && str[n] <= 102)
-								str[n] = str[n] - 32;
-						}
-						_puts(str);
-						break;
-					case 'o':
-						i = va_arg(ap, unsigned int);
-						_puts(convert(i, 8));
-					default:
-						break;
+		if (aux == '%')
+		{
+			i++, flag++;
+			aux = string[i];
+			if (aux == '\0' && _strlen((char *)string) == 1)
+				return (-1);
+			if (aux == '\0')
+				return (cont);
+			if (aux == '%')
+			{
+				flag++;
+			} else
+			{
+				cont_fm = function_manager(aux, arg);
+				if (cont_fm >= 0 && cont_fm != -1)
+				{
+					i++;
+					aux = string[i];
+					if (aux == '%')
+						flag--;
+					cont = cont + cont_fm;
+				} else if (cont_fm == -1 && aux != '\n')
+				{
+					cont += _putchar('%');
 				}
-				state = NORMAL_STATE;
-				break;
+			}
 		}
-		format++;
+		check_per = check_percent(&flag, aux);
+		cont += check_per;
+		if (check_per == 0 && aux != '\0' && aux != '%')
+			cont += _putchar(aux), i++;
+		check_per = 0;
 	}
-return (0);
+	return (cont);
+}
+/**
+ * check_percent - call function manager
+ *@flag: value by reference
+ *@aux: character
+ *Description: This function print % pear
+ *Return: 1 if % is printed
+ */
+int check_percent(int *flag, char aux)
+{
+	int tmp_flag;
+	int cont = 0;
+
+	tmp_flag = *flag;
+	if (tmp_flag == 2 && aux == '%')
+	{
+		_putchar('%');
+		tmp_flag = 0;
+		cont = 1;
+	}
+	return (cont);
+}
+
+/**
+ * call_funct_mgr - call function manager
+ *@aux: character parameter
+ *@arg: va_list arg
+ *Description: This function call function manager
+ *Return: num of characteres printed
+ */
+
+int call_funct_mgr(char aux, va_list arg)
+{
+	int cont = 0;
+
+	cont = function_manager(aux, arg);
+	return (cont);
 }

@@ -8,7 +8,7 @@ void _puts(char *str);
 void print_number(va_list ap, int base, int sign, int caps);
 int _strlen(char *s);
 int _printf(const char *format, ...);
-char *convert(unsigned int num, int base);
+char *convert(char hexa_dec[], unsigned int num, int base);
 int function_manager(char c, va_list arg);
 int _switch(char c, va_list arg);
 int print_character(va_list arg);

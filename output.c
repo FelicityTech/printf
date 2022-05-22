@@ -34,20 +34,37 @@ int _puts(char *str)
  *
  * Return: a string of the formatted data.
  */
-char *convert(unsigned int num, int base)
+char *convert(char hexa_dec[], unsigned int num, int base)
 {
-	static char rep[] = "0123456789abcdef";
 	static char buffer[50];
 	char *ptr;
+	int position = 0;
 
 	ptr = &buffer[49];
 	*ptr = '\0';
 
 	do
-	{
-		*--ptr = rep[num%base];
+	{	
+		position = num % base;
+		*--ptr = hexa_dec[position];
 		num /= base;
 	}while(num != 0);
 
 	return(ptr);
+}
+/**
+ *_strlen - reset number
+ *Description: This function return a length for some string
+ *@s: pointer char
+ *Return: int length
+ */
+int _strlen(char *s)
+{
+	int len = 0;
+
+	while (*s++)
+	{
+		len++;
+	}
+	return (len);
 }
