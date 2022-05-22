@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdarg.h>
 
 /**
  * _putchar - writes the character c to stdout
@@ -28,52 +29,42 @@ int _puts(char *str)
 }
 
 /**
- * print_number - prints an int to stdout
- * @num: the digit to ouput.
+ * convert - converter a data set to the right format
+ * @base: the base to convert the number to.
  *
- * Return: nothing
+ * Return: a string of the formatted data.
  */
-void print_number(unsigned int num, int base, int sign, int caps)
+char *convert(char hexa_dec[], unsigned int num, int base)
 {
-	int pos;
-	const char digits_hexa[] = "0123456789abcdef";
-	
-	if (!sign)
-		num = (unsigned int)num;	
-	else
-	{
-		if (num < 0)
-		{
-			_putchar('-');
-			num = -num;
-		}
-	}
-	if (num / base != 0)
-		print_number((num / base), base, sign, caps);
-	pos = num % base;
-	if (caps && pos >= 11)
-	{
-		_putchar((unsigned)digits_hexa[pos++] - 32);
-	}
-	else
-	{
-		_putchar((unsigned)digits_hexa[pos++]);
-	}
-}
-char *convert(unsigned int num, int base)
-{
-	static char rep[] = "0123456789abcdef";
 	static char buffer[50];
 	char *ptr;
+	int position = 0;
 
 	ptr = &buffer[49];
 	*ptr = '\0';
 
 	do
-	{
-		*--ptr = rep[num%base];
+	{	
+		position = num % base;
+		*--ptr = hexa_dec[position];
 		num /= base;
 	}while(num != 0);
 
 	return(ptr);
+}
+/**
+ *_strlen - reset number
+ *Description: This function return a length for some string
+ *@s: pointer char
+ *Return: int length
+ */
+int _strlen(char *s)
+{
+	int len = 0;
+
+	while (*s++)
+	{
+		len++;
+	}
+	return (len);
 }
