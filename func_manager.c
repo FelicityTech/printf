@@ -30,6 +30,9 @@ int _switch(char c, va_list arg)
 
 	switch (c)
 	{
+		case '%':
+			cont += print_character(arg);
+			break;
 		case 'b':
 			cont += print_unsign(arg, 2);
 			break;
